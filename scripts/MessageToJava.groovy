@@ -9,7 +9,7 @@ def processMessage(messageFile) {
 	def lastDot = messageFile.name.lastIndexOf('.')
 
 	if(lastDot >= 0) {
-		message = messageFile.name.substring(lastDot)
+		message = messageFile.name.substring(lastDot + 1)
 		pkg = messageFile.name.substring(0, lastDot)
 	} else {
 		message = messageFile.name
@@ -18,8 +18,6 @@ def processMessage(messageFile) {
 	messageFile.eachLine {
 		if (it.startsWith("#")) {
 			println it
-		} else if (it.startsWith("M")) {
-			message = it - "M "
 		} else if (it.startsWith("F")) {
 			def field = it - "F "
 			fields.add(field)
