@@ -42,7 +42,7 @@
 						}
 						
 						generateMessage('messages/org.amicofragile.test.MSG01', generatedClassesDir)
-						generateMessage('messages/MSG02', generatedClassesDir)
+						generateMessage('messages/org.amicofragile.test.MSG02', generatedClassesDir)
 					</source>					
 		        </configuration>
 		    </execution>
