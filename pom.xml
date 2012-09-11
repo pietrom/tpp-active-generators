@@ -28,13 +28,16 @@
 		        </goals>
 		        <configuration>
 					<source>
-						def generateMessage (msgFile) {
+						def generatedClassesDir = "src/generated/java"
+						new File(generatedClassesDir).mkdirs()
+						
+						def generateMessage (msgFile, targetDir) {
 							def shell = new GroovyShell()
-							shell.run(new File("scripts/MessageToJava.groovy"), [msgFile, "src/generated/java"] as String[])
+							shell.run(new File("scripts/MessageToJava.groovy"), [msgFile, targetDir] as String[])
 						}
 						
-						generateMessage('messages/MSG01')
-						generateMessage('messages/MSG02')
+						generateMessage('messages/MSG01', generatedClassesDir)
+						generateMessage('messages/MSG02', generatedClassesDir)
 					</source>					
 		        </configuration>
 		    </execution>
