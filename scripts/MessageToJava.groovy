@@ -1,32 +1,51 @@
 println "Running MessageToJava ${args[0]} ${args[1]}"
 
-def input = new File(args[0])
 
-def message = null
-def fields = []
+def processMessage(messageFile) {
+	def message = null
+	def pkg = ""
+	def fields = []
 
-input.eachLine {
-	if (it.startsWith("#")) {
-		println it
-	} else if (it.startsWith("M")) {
-		message = it - "M "
-	} else if (it.startsWith("F")) {
-		def field = it - "F "
-		fields.add(field)
+	def lastDot = messageFile.name.lastIndexOf('.')
+
+	if(lastDot >= 0) {
+		message = messageFile.name.substring(lastDot)
+		pkg = messageFile.name.substring(0, lastDot)
 	} else {
-		println "Unknow starter char for line $it"
+		message = messageFile.name
 	}
+
+	messageFile.eachLine {
+		if (it.startsWith("#")) {
+			println it
+		} else if (it.startsWith("M")) {
+			message = it - "M "
+		} else if (it.startsWith("F")) {
+			def field = it - "F "
+			fields.add(field)
+		} else {
+			println "Unknow starter char for line $it"
+		}
+	}
+
+	def outDir = new File(args[1] + '/' + pkg.replace('.', '/'))
+	outDir.mkdirs()
+	
+	def out = new File(outDir, message + ".java")
+	out.delete()
+
+	println "Creating file $out..."
+
+	out << "package $pkg;\n\n"
+	out << "public class $message {\n"
+	fields.each {
+		out << "\tprivate String $it;\n"
+	}
+	out << "}\n"
+
+	println "File $out created!"
 }
 
-def out = new File(args[1] + "/" + message + ".java")
-out.delete()
-
-println "Creating file $out..."
-
-out << "public class $message {\n"
-fields.each {
-	out << "\tprivate String $it;\n"
+new File(args[0]).eachFile {
+	processMessage(it)
 }
-out << "}\n"
-
-println "File $out created!"

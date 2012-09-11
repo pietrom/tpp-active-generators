@@ -1,3 +1,5 @@
+package org.amicofragile.test; 
+
 import org.junit.Test;
 
 public class MSG01Test {

@@ -41,8 +41,7 @@
 							shell.run(new File("scripts/MessageToJava.groovy"), [msgFile, targetDir] as String[])
 						}
 						
-						generateMessage('messages/org.amicofragile.test.MSG01', generatedClassesDir)
-						generateMessage('messages/org.amicofragile.test.MSG02', generatedClassesDir)
+						generateMessage('messages', generatedClassesDir)
 					</source>					
 		        </configuration>
 		    </execution>
