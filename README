@@ -1,0 +1,1 @@
+Simple Java project whose Maven build uses a Groovy script as active generator in order to generate source files before compilation
